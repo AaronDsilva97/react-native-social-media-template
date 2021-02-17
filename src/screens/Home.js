@@ -1,37 +1,58 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
-import { increment, decrement } from "../store/action/Counter_Action";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight,
+  Switch,
+} from "react-native";
+import { increment, decrement } from "../store/action/Counter";
+import { toggle_theme } from "../store/action/Theme";
 import { useSelector, useDispatch } from "react-redux";
-import { Color } from "../theme";
+
 const Home = ({ navigation }) => {
+  const [isEnabled, setIsEnabled] = React.useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled((previousState) => !previousState);
+    dispatch(toggle_theme(isEnabled));
+  };
+
   const { count } = useSelector((state) => state.counter);
+  const { color } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: color.background }]}>
       <TouchableHighlight
-        style={styles.button}
+        style={[styles.button, { backgroundColor: color.surface }]}
         onPress={() => navigation.navigate("Detail")}
       >
-        <Text style={styles.buttonText}>Go to Detail Page</Text>
+        <Text style={{ color: color.on_surface }}>Go to Detail Page</Text>
       </TouchableHighlight>
-      <Text style={styles.buttonText}>Home Screen</Text>
+      <Text style={{ color: color.on_surface }}>Home Screen</Text>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <TouchableHighlight
-          style={styles.button}
+          style={[styles.button, { backgroundColor: color.primary }]}
           onPress={() => dispatch(decrement())}
         >
-          <Text style={styles.buttonText}>-</Text>
+          <Text style={{ color: color.on_primary }}>-</Text>
         </TouchableHighlight>
         <TouchableHighlight>
-          <Text style={styles.buttonText}>{count}</Text>
+          <Text style={{ color: color.on_surface }}>{count}</Text>
         </TouchableHighlight>
         <TouchableHighlight
-          style={styles.button}
+          style={[styles.button, { backgroundColor: color.primary }]}
           onPress={() => dispatch(increment())}
         >
-          <Text style={styles.buttonText}>+</Text>
+          <Text style={{ color: color.on_primary }}>+</Text>
         </TouchableHighlight>
       </View>
+      <Switch
+        trackColor={{ false: color.on_surface, true: color.surface }}
+        thumbColor={isEnabled ? color.secondary : color.primary}
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+      />
     </View>
   );
 };
@@ -43,15 +64,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Color.background,
   },
   button: {
-    backgroundColor: Color.surface,
     padding: 20,
     borderRadius: 20,
     margin: 10,
-  },
-  buttonText: {
-    color: Color.on_surface,
+    elevation: 12,
   },
 });

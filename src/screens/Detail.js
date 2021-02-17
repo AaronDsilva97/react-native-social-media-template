@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import { Color } from "../theme";
 const Detail = () => {
   const { count } = useSelector((state) => state.counter);
+  const { color } = useSelector((state) => state.theme);
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Detail Screen</Text>
-      <Text style={styles.text}>{count}</Text>
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <Text style={{ color: color.on_background }}>Detail Screen</Text>
+      <Text style={{ color: color.on_background }}>{count}</Text>
     </View>
   );
 };
@@ -19,9 +19,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Color.background,
-  },
-  text: {
-    color: Color.on_background,
   },
 });

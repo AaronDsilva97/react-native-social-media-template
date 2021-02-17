@@ -1,4 +1,4 @@
-import { Color } from "./Color";
+import { Color, Color_Light, Color_Dark } from "./Color";
 import { Font, FontSize } from "./Typography";
 
-export { Color, Font, FontSize };
+export { Color, Color_Dark, Color_Light, Font, FontSize };

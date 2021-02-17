@@ -2,19 +2,20 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../screens/Home";
 import Detail from "../screens/Detail";
-import { Color } from "../theme";
+import { useSelector } from "react-redux";
 const Stack = createStackNavigator();
 
 const Main = () => {
+  const { color } = useSelector((state) => state.theme);
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: Color.surface,
+          backgroundColor: color.surface,
           elevation: 12,
         },
         headerTitleStyle: {
-          color: Color.on_surface,
+          color: color.on_surface,
         },
       }}
     >
