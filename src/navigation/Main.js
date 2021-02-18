@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../screens/Home";
 import Detail from "../screens/Detail";
+import Profile from "../screens/Profile";
 import { useSelector } from "react-redux";
 const Stack = createStackNavigator();
 
@@ -19,6 +20,11 @@ const Main = () => {
         },
       }}
     >
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Detail" component={Detail} />
     </Stack.Navigator>
