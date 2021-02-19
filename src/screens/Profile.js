@@ -135,7 +135,14 @@ const FirstRoute = () => (
 );
 
 const SecondRoute = () => (
-  <View style={[styles.scene, { backgroundColor: "#673ab7" }]} />
+  <View style={[styles.scene, { backgroundColor: "#673ab7" }]}>
+    <FlatList
+      data={userImages}
+      numColumns={3}
+      keyExtractor={(item) => item.id}
+      renderItem={imageRender}
+    />
+  </View>
 );
 
 const initialLayout = { width: Dimensions.get("window").width };
@@ -185,7 +192,7 @@ const Profile = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "first", title: "Images" },
-    { key: "second", title: "Profile" },
+    { key: "second", title: "Tags" },
   ]);
 
   const renderScene = SceneMap({
