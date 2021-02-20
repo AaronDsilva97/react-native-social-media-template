@@ -8,6 +8,7 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const width = Dimensions.get("window").width;
 
@@ -68,11 +69,18 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={storyData}
-          keyExtractor={(key) => key.id}
+          keyExtractor={(key) => key.id.toString()}
           renderItem={Story}
         />
       </View>
-      <View style={{ marginTop: 10 }}>
+      <View
+        style={{
+          marginTop: 10,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image
             style={{
@@ -86,15 +94,52 @@ const Home = () => {
           />
           <Text>Username</Text>
         </View>
-        <Image
-          style={{
-            width: width,
-            height: width * 1.6,
-            marginVertical: 2,
-          }}
-          source={{ uri: "https://picsum.photos/seed/picsum/200/300" }}
-          resizeMode="cover"
-        />
+        <Icon name="dots-vertical" size={24} style={{ paddingRight: 10 }} />
+      </View>
+      <Image
+        style={{
+          width: width,
+          height: width,
+          marginVertical: 4,
+        }}
+        source={{ uri: "https://picsum.photos/seed/picsum/200/300" }}
+        resizeMode="cover"
+      />
+      <View style={{ marginLeft: 10, justifyContent: "flex-start" }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ flexDirection: "row" }}>
+            <Icon name="heart-outline" size={28} style={{ paddingRight: 15 }} />
+            <Icon
+              name="comment-outline"
+              size={28}
+              style={{ paddingRight: 15 }}
+            />
+            <Icon name="share" size={28} />
+          </View>
+          <Icon
+            name="bookmark-outline"
+            size={28}
+            style={{ paddingHorizontal: 15 }}
+          />
+        </View>
+        <Text>2309 likes</Text>
+        <Text>username My caption will be put here</Text>
+        <Text>View all 54 comments </Text>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
+        >
+          <Image
+            style={{
+              width: width * 0.06,
+              height: width * 0.06,
+              borderRadius: width * 0.3,
+              marginRight: 10,
+            }}
+            source={{ uri: "https://picsum.photos/seed/picsum/200/300" }}
+            resizeMode="cover"
+          />
+          <Text>Add a comment ...</Text>
+        </View>
       </View>
     </View>
   );
