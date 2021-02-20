@@ -7,8 +7,10 @@ import {
   Image,
   FlatList,
   Dimensions,
+  Share,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Sharing from "expo-sharing";
 const width = Dimensions.get("window").width;
 
 const storyData = [
@@ -28,20 +30,76 @@ const storyData = [
 ];
 
 const timeLineData = [
-  { id: 1, imageId: 1003, username: "username" },
-  { id: 2, imageId: 1035, username: "username1" },
-  { id: 3, imageId: 1032, username: "username12" },
-  { id: 4, imageId: 1036, username: "usersname" },
-  { id: 5, imageId: 1037, username: "users123name" },
-  { id: 6, imageId: 1038, username: "123username" },
-  { id: 7, imageId: 1043, username: "use45rname" },
-  { id: 8, imageId: 1044, username: "usern6ame" },
-  { id: 9, imageId: 1045, username: "userndame" },
-  { id: 10, imageId: 1047, username: "userdsvsname" },
-  { id: 11, imageId: 1050, username: "usernamvse" },
-  { id: 12, imageId: 1053, username: "usernamess" },
-  { id: 13, imageId: 1005, username: "usernasdsdfme" },
+  { id: 1, imageId: 1003, username: "username", liked: 0, totalLikes: 1222 },
+  { id: 2, imageId: 1035, username: "username1", liked: 1, totalLikes: 12 },
+  { id: 3, imageId: 1032, username: "username12", liked: 0, totalLikes: 21222 },
+  { id: 4, imageId: 1036, username: "usersname", liked: 1, totalLikes: 12412 },
+  {
+    id: 5,
+    imageId: 1037,
+    username: "users123name",
+    liked: 1,
+    totalLikes: 1222,
+  },
+  { id: 6, imageId: 1038, username: "123username", liked: 0, totalLikes: 1 },
+  {
+    id: 7,
+    imageId: 1043,
+    username: "use45rname",
+    liked: 1,
+    totalLikes: 124542,
+  },
+  { id: 8, imageId: 1044, username: "usern6ame", liked: 0, totalLikes: 1242 },
+  { id: 9, imageId: 1045, username: "userndame", liked: 1, totalLikes: 46122 },
+  {
+    id: 10,
+    imageId: 1047,
+    username: "userdsvsname",
+    liked: 0,
+    totalLikes: 12892,
+  },
+  {
+    id: 11,
+    imageId: 1050,
+    username: "usernamvse",
+    liked: 0,
+    totalLikes: 64122,
+  },
+  {
+    id: 12,
+    imageId: 1053,
+    username: "usernamess",
+    liked: 0,
+    totalLikes: 13422,
+  },
+  {
+    id: 13,
+    imageId: 1005,
+    username: "usernasdsdfme",
+    liked: 0,
+    totalLikes: 1222412,
+  },
 ];
+
+const onShare = async () => {
+  try {
+    const result = await Share.share({
+      message:
+        "React Native | A framework for building native apps using React",
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
 const Story = ({ item }) => {
   return (
@@ -64,7 +122,7 @@ const Story = ({ item }) => {
   );
 };
 
-const TimeLine = ({ item }) => {
+const TimeLine = ({ item, editData, setEditData }) => {
   return (
     <View style={{ marginBottom: 10 }}>
       <View
@@ -103,13 +161,33 @@ const TimeLine = ({ item }) => {
       <View style={{ marginLeft: 10, justifyContent: "flex-start" }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row" }}>
-            <Icon name="heart-outline" size={28} style={{ paddingRight: 15 }} />
+            <Icon
+              name={item.liked ? "heart" : "heart-outline"}
+              size={28}
+              style={{ paddingRight: 15 }}
+              onPress={() => {
+                if (item.liked) {
+                  item.liked = 0;
+                } else {
+                  item.liked = 1;
+                }
+                setEditData(timeLineData);
+                // console.log(item.liked);
+                console.log(item.liked);
+              }}
+            />
             <Icon
               name="comment-outline"
               size={28}
               style={{ paddingRight: 15 }}
             />
-            <Icon name="share" size={28} />
+            <Icon
+              name="share"
+              size={28}
+              onPress={async () => {
+                onShare();
+              }}
+            />
           </View>
           <Icon
             name="bookmark-outline"
@@ -117,7 +195,7 @@ const TimeLine = ({ item }) => {
             style={{ paddingHorizontal: 15 }}
           />
         </View>
-        <Text>2309 likes</Text>
+        <Text>{item.totalLikes} likes</Text>
         <Text>username My caption will be put here</Text>
         <Text>View all 54 comments </Text>
         <View
@@ -140,6 +218,7 @@ const TimeLine = ({ item }) => {
   );
 };
 const Home = ({ navigation }) => {
+  const [editData, setEditData] = React.useState(timeLineData);
   return (
     <View style={styles.container}>
       <View
@@ -169,9 +248,12 @@ const Home = ({ navigation }) => {
         />
       </View>
       <FlatList
-        data={timeLineData}
+        data={editData}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={TimeLine}
+        renderItem={({ item }) => (
+          <TimeLine item={item} editData={editData} setEditData={setEditData} />
+        )}
+        extraData={editData}
       />
     </View>
   );
