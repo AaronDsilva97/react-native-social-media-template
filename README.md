@@ -2,12 +2,10 @@
 
 > A template for social media app (Instagram like UI).
 
-One to two paragraph statement about your product and what it does.
-
-![](readme/home.jpg)
-![](readme/explore.jpg)
-![](readme/details.jpg)
-![](readme/profile.jpg)
+![Home Page](https://github.com/AaronDsilva97/react-native-social-media-template/blob/main/readme/home.jpg)
+![Explore Page](https://github.com/AaronDsilva97/react-native-social-media-template/blob/main/readme/explore.jpg)
+![Detail Page](https://github.com/AaronDsilva97/react-native-social-media-template/blob/main/readme/details.jpg)  
+![Profile Page](https://github.com/AaronDsilva97/react-native-social-media-template/blob/main/readme/profile.jpg)
 
 ## Installation
 
