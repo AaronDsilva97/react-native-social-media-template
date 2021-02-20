@@ -8,7 +8,6 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const width = Dimensions.get("window").width;
 
@@ -25,6 +24,22 @@ const storyData = [
   { id: 10, imageId: 1011, username: "userdsvsname" },
   { id: 11, imageId: 1016, username: "usernamvse" },
   { id: 12, imageId: 1014, username: "usernamess" },
+  { id: 13, imageId: 1005, username: "usernasdsdfme" },
+];
+
+const timeLineData = [
+  { id: 1, imageId: 1003, username: "username" },
+  { id: 2, imageId: 1035, username: "username1" },
+  { id: 3, imageId: 1032, username: "username12" },
+  { id: 4, imageId: 1036, username: "usersname" },
+  { id: 5, imageId: 1037, username: "users123name" },
+  { id: 6, imageId: 1038, username: "123username" },
+  { id: 7, imageId: 1043, username: "use45rname" },
+  { id: 8, imageId: 1044, username: "usern6ame" },
+  { id: 9, imageId: 1045, username: "userndame" },
+  { id: 10, imageId: 1047, username: "userdsvsname" },
+  { id: 11, imageId: 1050, username: "usernamvse" },
+  { id: 12, imageId: 1053, username: "usernamess" },
   { id: 13, imageId: 1005, username: "usernasdsdfme" },
 ];
 
@@ -48,34 +63,14 @@ const Story = ({ item }) => {
     </View>
   );
 };
-const Home = () => {
+
+const TimeLine = ({ item }) => {
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          width: "100%",
-          paddingTop: 5,
-          paddingHorizontal: 10,
-          justifyContent: "space-between",
-        }}
-      >
-        <Icon name="plus-circle-outline" size={24} />
-        <Text> Home</Text>
-        <Icon name="message" size={24} />
-      </View>
-      <View style={{ padding: 10 }}>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={storyData}
-          keyExtractor={(key) => key.id.toString()}
-          renderItem={Story}
-        />
-      </View>
+    <View style={{ marginBottom: 10 }}>
       <View
         style={{
           marginTop: 10,
+
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
@@ -92,7 +87,7 @@ const Home = () => {
             source={{ uri: "https://picsum.photos/seed/picsum/200/300" }}
             resizeMode="cover"
           />
-          <Text>Username</Text>
+          <Text>{item.username}</Text>
         </View>
         <Icon name="dots-vertical" size={24} style={{ paddingRight: 10 }} />
       </View>
@@ -102,7 +97,7 @@ const Home = () => {
           height: width,
           marginVertical: 4,
         }}
-        source={{ uri: "https://picsum.photos/seed/picsum/200/300" }}
+        source={{ uri: `https://picsum.photos/id/${item.imageId}/200/300` }}
         resizeMode="cover"
       />
       <View style={{ marginLeft: 10, justifyContent: "flex-start" }}>
@@ -141,6 +136,43 @@ const Home = () => {
           <Text>Add a comment ...</Text>
         </View>
       </View>
+    </View>
+  );
+};
+const Home = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          flexDirection: "row",
+          width: "100%",
+          paddingTop: 5,
+          paddingHorizontal: 10,
+          justifyContent: "space-between",
+        }}
+      >
+        <Icon
+          name="plus-circle-outline"
+          size={24}
+          onPress={() => navigation.navigate("Share")}
+        />
+        <Text> Home</Text>
+        <Icon name="message" size={24} />
+      </View>
+      <View style={{ padding: 10 }}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={storyData}
+          keyExtractor={(key) => key.id.toString()}
+          renderItem={Story}
+        />
+      </View>
+      <FlatList
+        data={timeLineData}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={TimeLine}
+      />
     </View>
   );
 };

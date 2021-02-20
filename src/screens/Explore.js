@@ -194,14 +194,14 @@ const Explore = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={filter}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={filterRender}
         />
       </View>
       <FlatList
         data={userImages}
         numColumns={3}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={imageRender}
       />
     </View>
