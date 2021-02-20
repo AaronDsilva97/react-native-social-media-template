@@ -181,6 +181,7 @@ const CategoryLine = () => {
   return (
     <FlatList
       horizontal
+      showsHorizontalScrollIndicator={false}
       data={categoryList}
       keyExtractor={(item) => item.categoryTitle}
       renderItem={renderItem}
